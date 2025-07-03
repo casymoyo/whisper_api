@@ -36,13 +36,11 @@ class AudioFile(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     filename = Column(String, nullable=False)
-    transcription = Column(String, nullable=True)
-    category = Column(String, nullable=False)
-    author = Column(String, nullable=False)
-    duration = Column(String, nullable=False)
+    transcription = Column(String, nullable=False)
+    transcription_with_timestamps = Column(Text, nullable=True)  # Store transcription with timestamps
     date = Column(DateTime, nullable=False)
-    image = Column(String, nullable=False)
-    text_document = Column(String, nullable=True)
+    author = Column(String, nullable=True)  # New field
+    category = Column(String, nullable=True)  # New field
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -56,3 +54,4 @@ class Notification(Base):
     content = Column(Text)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     extra_data = Column(Text, nullable=True)  # JSON string for additional data 
+    is_read = Column(Boolean, default=False)  # Track if notification has been read 
